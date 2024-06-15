@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "8d9a8072-f235-4c05-8675-f25f2525b6a5",
+		"name": "manga-konbini",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21020165"
+	},
+	"item": [
+		{
+			"name": "01 - Setup",
+			"item": [
+				{
+					"name": "1.1 - Setup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Sample - status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"apikey\", \"xxx.yyy.zzz\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/actuator/health",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 - Setup - Get Token User Moderator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response Containing accessToken\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"user_token_moderator\", jsonData.accessToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var user_username_moderator = \"\";",
+									"var user_password_moderator = \"\";",
+									"var user_token_moderator = \"Bearer xxx\";",
+									"",
+									"pm.environment.set(\"user_username_moderator\", user_username_moderator);",
+									"pm.environment.set(\"user_password_moderator\", user_password_moderator);",
+									"pm.environment.set(\"user_token_moderator\", user_token_moderator);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"{{user_password_moderator}}\",\n  \"username\": \"{{user_username_moderator}}\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 - Setup - Get Token User Standard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response Containing accessToken\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"user_token_standard\", jsonData.accessToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var user_username_standard = \"\";",
+									"var user_password_standard = \"\";",
+									"var user_token_standard = \"Bearer xxx\";",
+									"",
+									"pm.environment.set(\"user_username_standard\", user_username_standard);",
+									"pm.environment.set(\"user_password_standard\", user_password_standard);",
+									"pm.environment.set(\"user_token_standard\", user_token_standard);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"{{user_password_standard}}\",\n  \"username\": \"{{user_username_standard}}\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
